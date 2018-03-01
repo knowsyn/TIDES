@@ -83,20 +83,6 @@ command.
 
     perldoc TIDES
 
-You can also look for information at:
-
-    Search CPAN
-        http://search.cpan.org/dist/TIDES
-
-    CPAN Request Tracker:
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=TIDES
-
-    AnnoCPAN, annotated CPAN documentation:
-        http://annocpan.org/dist/TIDES
-
-    CPAN Ratings:
-        http://cpanratings.perl.org/d/TIDES
-
 COPYRIGHT AND LICENCE
 
 Copyright 2018 Knowledge Synthesis Inc.
