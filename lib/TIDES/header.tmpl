@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>[% title %]</title>
+        <link rel="stylesheet" type="text/css" href="/tides.css"/>
+    </head>
+    <body>
+    <div id="header">
+        <p>accatcgacgagagc</p>
+[%+ UNLESS login %]
+        <div class="dropdown">
+          <button class="dropbtn">Menu</button>
+          <div class="dropdown-content">
+              <a href="[% url %]?rm=add_collection">Add Collection</a>
+              <a href="[% url %]?rm=add_samples">Add Sample</a>
+              <a href="[% url %]?rm=add_hla">Add HLA</a>
+              <a href="[% url %]?rm=delete">Delete</a>
+              <a href="[% url %]?rm=search">Search</a>
+              <a href="[% url %]?rm=logout" class="logout">Log Out</a>
+          </div>
+        </div>
+[%+ END %]
+    </div>

@@ -1,0 +1,11 @@
+#!/usr/bin/perl -w
+use strict;
+use TIDES::StripScan;
+
+open(FH, $ARGV[0]) or die $!;
+my $gls = TIDES::StripScan->new(fh => \*FH)->parse;
+close FH or die $!;
+
+for (sort keys %$gls) {
+    print "$_\t$$gls{$_}\n";
+}

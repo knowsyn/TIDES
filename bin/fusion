@@ -1,0 +1,13 @@
+#!/usr/bin/perl -w
+use strict;
+use File::MimeInfo;
+use TIDES::Fusion;
+use TIDES::Spreadsheet;
+
+my $file = $ARGV[0];
+my $ss = TIDES::Spreadsheet->new(file => $file, mime => mimetype($file));
+my $fusion = TIDES::Fusion->new(worksheet => $ss->worksheet);
+my $samples = $fusion->parse;
+for (sort keys %$samples) {
+    print "$_\t$$samples{$_}\n";
+}

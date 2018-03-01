@@ -1,0 +1,10 @@
+#!/usr/bin/perl -wT
+use strict;
+use TIDES;
+use File::ShareDir 'dist_dir';
+
+my $tides = TIDES->new(PARAMS => {
+    gl_service  => 'https://gl.nmdp.org/',
+    gfe_service => 'http://gfe.b12x.org/gfe',
+});
+$tides->run;

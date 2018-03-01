@@ -1,0 +1,17 @@
+[% INCLUDE TIDES/header.tmpl %]
+    [% form %]
+    <p>
+    The Sample File is an Excel spreadsheet that lists samples in rows and sample properties in columns. The first row specifies the property names.
+    In addition to the mandatory Sample Name column, the loader recognizes the following properties, without regard to case:
+    </p>
+    <table>
+        <tr><th>Property</th><th>Type</th></tr>
+[% FOREACH name IN props.get_names.sort %]
+        <tr>
+            <td>[% name %]</td>
+            <td>[% props.get_type(props.get_id(name)) %]</td>
+        </tr>
+[% END %]
+    </table>
+    <p>Type &quot;fixed&quot; indicates a controlled vocabulary. The Locus property, which indicates the HLA data that a sample has, is ignored by the loader.</p>
+[% INCLUDE TIDES/footer.tmpl %]

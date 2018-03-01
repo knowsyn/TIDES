@@ -1,0 +1,10 @@
+[% INCLUDE TIDES/header.tmpl %]
+    [% form %]
+    <p>Detected nomenclature: [% imgt %]</p>
+    <table>
+        <tr><th>Sample</th><th>GL String</th><th># GFE Sequences</th></tr>
+    [% FOREACH sample IN samples.keys.sort %]
+        <tr><th>[% sample %]</th><td>[% samples.$sample.gls %]</td><td>[% samples.$sample.n_gfe %]</td></tr>
+    [% END %]
+    </table>
+[% INCLUDE TIDES/footer.tmpl %]

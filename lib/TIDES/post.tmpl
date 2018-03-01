@@ -1,0 +1,26 @@
+[% INCLUDE TIDES/header.tmpl %]
+    [% form %]
+    <table>
+        <tr><th></th><th>Sample</th><th>Collection</th><th>GL Service</th><th>GFE Service</th></tr>
+[% FOREACH sample IN samples.keys.nsort %]
+
+        <tr>
+            <td>[% loop.count %]</td>
+            <td>[% samples.$sample.name %]</td>
+            <td>[% samples.$sample.collection %]</td>
+            <td>[% IF samples.$sample.defined('gls_uri') %]
+                    [% FOREACH uri IN samples.$sample.gls_uri %]<a href="[% uri %]">[% uri %]</a>[% IF ! loop.last %]<br>
+
+                    [% END; END %]
+                [% ELSIF samples.$sample.defined('gls_err') %]
+                    [% samples.$sample.gls_err %]
+                [% ELSE %]No URI response from GL Service[% END %]</td>
+            <td>[% IF samples.$sample.defined('gfe') %]
+                    [% FOREACH gfe IN samples.$sample.gfe %][% gfe %][% IF ! loop.last %]<br>
+
+                    [% END; END %]
+                [% ELSE %]No sequences submitted[% END %]</td>
+        </tr>
+[% END %]
+    </table>
+[% INCLUDE TIDES/footer.tmpl %]

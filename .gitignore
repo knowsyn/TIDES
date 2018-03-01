@@ -1,0 +1,8 @@
+/META.yml
+/META.json
+/MYMETA.*
+/_build/
+/Build
+/blib/
+/*.gz
+/MANIFEST.bak

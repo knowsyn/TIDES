@@ -1,0 +1,7 @@
+[% INCLUDE TIDES/header.tmpl %]
+    <table>
+        <tr><th>Number of Samples Added</th><td>[% count %]</td></tr>
+        <tr><th>Columns Added</th><td>[% added.join('<br>') %]</td></tr>
+        <tr><th>Columns Skipped</th><td>[% skipped.join('<br>') %]</td></tr>
+    </table>
+[% INCLUDE TIDES/footer.tmpl %]

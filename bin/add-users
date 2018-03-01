@@ -1,0 +1,13 @@
+#!/usr/bin/perl -w
+use strict;
+use Digest::SHA;
+
+# Reads tab-delimited username and passwords.
+# Output SQL to add users to database.
+
+while (<>) {
+    chomp;
+    my($user, $pw) = split /\t/;
+    my $sha = Digest::SHA::sha1_base64($pw);
+    print "INSERT INTO users (name,password) VALUES ('$user','$sha');\n"
+}

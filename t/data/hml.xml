@@ -1,0 +1,70 @@
+<hml version="1.0.2" project-name="HML-test" xmlns="http://schemas.nmdp.org/spec/hml/1.0.2" xsi:schemaLocation="http://schemas.nmdp.org/spec/hml/1.0.2/hml-1.0.2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sample id="HML1">
+    <typing date="2017-03-31" gene-family="HLA">
+      <allele-assignment date="2017-03-31" allele-db="IMGT/HLA" allele-version="3.25.0">
+        <glstring>HLA-A*01:01:01:01+HLA-A*02:01:01:01</glstring>
+      </allele-assignment>
+      <consensus-sequence date="2017-03-31">
+        <reference-database availability="public" name="IMGT/HLA" version="3.25.0">
+          <reference-sequence id="ref1" name="HLA-A*01:01:01:01" />
+        </reference-database>
+        <reference-database availability="public" name="IMGT/HLA" version="3.25.0">
+          <reference-sequence id="ref2" name="HLA-A*02:01:01:01" />
+        </reference-database>
+        <consensus-sequence-block reference-sequence-id="ref1" phase-set="1" start="0" end="10">
+          <sequence>AAAAAAAAAA</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref2" phase-set="2" start="0" end="10">
+          <sequence>CCCCCCCCCC</sequence>
+        </consensus-sequence-block>
+        <!-- overlap -->
+        <consensus-sequence-block reference-sequence-id="ref1" phase-set="1" start="5" end="15">
+          <sequence>AAAAATTTTT</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref2" phase-set="2" start="5" end="15">
+          <sequence>CCCCCGGGGG</sequence>
+        </consensus-sequence-block>
+        <!-- different phase -->
+        <consensus-sequence-block reference-sequence-id="ref1" phase-set="3" start="15" end="25">
+          <sequence>TTTTTTTTTT</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref2" phase-set="4" start="15" end="25">
+          <sequence>GGGGGGGGGG</sequence>
+        </consensus-sequence-block>
+        <!-- 1 of 2 in phase with earlier block -->
+        <consensus-sequence-block reference-sequence-id="ref1" phase-set="1" start="25" end="35">
+          <sequence>TTTTTTTTTT</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref2" phase-set="5" start="25" end="35">
+          <sequence>GGGGGGGGGG</sequence>
+        </consensus-sequence-block>
+      </consensus-sequence>
+    </typing>
+    <typing date="2017-03-31" gene-family="HLA">
+      <allele-assignment date="2017-03-31" allele-db="IMGT/HLA" allele-version="3.25.0">
+        <glstring>HLA-C*01:02:01+HLA-C*01:02:02</glstring>
+      </allele-assignment>
+      <consensus-sequence date="2017-03-31">
+        <reference-database availability="public" name="IMGT/HLA" version="3.25.0">
+          <reference-sequence id="ref1" name="HLA-C*01:02:01" />
+        </reference-database>
+        <reference-database availability="public" name="IMGT/HLA" version="3.25.0">
+          <reference-sequence id="ref2" name="HLA-C*01:02:02" />
+        </reference-database>
+        <!-- no phase-set -->
+        <consensus-sequence-block reference-sequence-id="ref1" start="0" end="10">
+          <sequence>AAAAAAAAAA</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref2" start="0" end="10">
+          <sequence>CCCCCCCCCC</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref1" start="10" end="20">
+          <sequence>AAAAATTTTT</sequence>
+        </consensus-sequence-block>
+        <consensus-sequence-block reference-sequence-id="ref2" start="10" end="20">
+          <sequence>CCCCCGGGGG</sequence>
+        </consensus-sequence-block>
+      </consensus-sequence>
+    </typing>
+  </sample>
+</hml>

@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+use CGI::Application::Server;
+use lib 'lib';
+use TIDES;
+
+my $app = TIDES->new(PARAMS => {
+    gl_service  => 'https://gl.nmdp.org/',
+    gfe_service => 'http://gfe.b12x.org/gfe',
+});
+my $server = CGI::Application::Server->new;
+$server->document_root('./htdocs');
+$server->entry_points({
+    '/index.cgi' => $app,
+});
+$server->run;
