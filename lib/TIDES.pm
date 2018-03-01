@@ -1032,7 +1032,6 @@ sub _imgt_version {
     # Taint mode
     $ENV{PATH} = '/bin:/usr/bin';
     delete @ENV{'IFS', 'CDPATH', 'ENV', 'BASH_ENV'};
-    $ENV{R_LIBS} = '/home/ken/rlib';
 
     my $r = Statistics::R->new;
 
