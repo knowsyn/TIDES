@@ -56,6 +56,7 @@ Statistics::R along with the R disambiguateR package
 Template
 URI::Escape
 WWW::Curl::Easy
+XML::Twig
 
 At build time you will need the above modules plus the following if you want
 to run the tests:

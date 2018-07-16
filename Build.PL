@@ -25,6 +25,7 @@ my $build = Module::Build->new(
         'Titanium'                                 => 0,
         'URI::Escape'                              => 0,
         'WWW::Curl::Easy'                          => 0,
+        'XML::Twig'                                => 0,
     },
     css_files          => {
         'htdocs/delete.png' => 'htdocs/delete.png',
