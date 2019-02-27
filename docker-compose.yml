@@ -1,0 +1,45 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=tides
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-password
+      - WWW_PASSWORD_FILE=/run/secrets/www-password
+    secrets:
+      - postgres-password
+      - www-password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+  web:
+    image: knowsyn/tides
+    environment:
+      - DB_HOST=db
+      - TIDES_USER=demo
+      - TIDES_PASSWORD_FILE=/run/secrets/user-password
+      - WWW_PASSWORD_FILE=/run/secrets/www-password
+      - CGI_SECRET_FILE=/run/secrets/cgi-cookie
+    secrets:
+      - user-password
+      - www-password
+      - cgi-cookie
+    ports:
+      - 443:443
+    depends_on:
+      - db
+
+secrets:
+  postgres-password:
+    file: ./secrets/postgres.txt
+  user-password:
+    file: ./secrets/tides.txt
+  www-password:
+    file: ./secrets/www.txt
+  cgi-cookie:
+    file: ./secrets/cgi.txt
+
+volumes:
+  postgres_data:

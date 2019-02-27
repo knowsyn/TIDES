@@ -36,5 +36,4 @@ my $build = Module::Build->new(
 );
 $build->add_build_element('tmpl');
 $build->add_build_element('css');
-$build->add_build_element('fna');
 $build->create_build_script;

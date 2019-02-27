@@ -60,14 +60,18 @@ various immunogenomic analysis file formats.
 
 =head3 cgiapp_init
 
-Called automatically right before the setup().
+Called automatically right before setup().
 
 =cut
 
 sub cgiapp_init {
     my $c = shift;
 
-    $c->dbh_config("dbi:Pg:dbname=tides", '', '', {AutoCommit => 0});
+    my $host = $ENV{DB_HOST} || 'localhost';
+    my $user = 'tides';
+    my $pass = _read_secret($ENV{WWW_PASSWORD_FILE});
+    $c->dbh_config("dbi:Pg:dbname=tides;host=$host", $user, $pass, {AutoCommit => 0});
+    $c->_init_tides_user;
     return;
 
     # FIX: DB sessions
@@ -118,6 +122,7 @@ sub setup {
     }
     $c->run_modes(AUTOLOAD => 'search');
 
+    my $secret = _read_secret($ENV{CGI_SECRET_FILE});
     $c->authen->config(
         DRIVER => ['DBI',
             TABLE       => 'users',
@@ -127,7 +132,7 @@ sub setup {
             },
             # FIX: Use COLUMNS and custom filter to implement salted SHA1
         ],
-        STORE              => ['Cookie'],
+        STORE              => ['Cookie', SECRET => $secret],
         LOGIN_FORM         => { DISPLAY_CLASS => 'Basic' },
         LOGIN_RUNMODE      => 'login',
         LOGOUT_RUNMODE     => 'logout',
@@ -1549,6 +1554,58 @@ sub _gl_to_pypop {
     return \@data;
 }
 
+=head3 _read_secret
+
+  * Purpose: Read a Docker secret file
+  * Expected parameters: filename
+  * Function on success: Returns value in file
+  * Function on failure: Returns empty string
+
+=cut
+
+sub _read_secret {
+    my $file = shift;
+    my $val = '';
+    return $val unless -f $file;
+
+    open(my $fp, '<', $file) or return $val;
+    while (<$fp>) {
+        chomp;
+        $val = $_;
+        last;
+    }
+    close $fp;
+    return $val;
+}
+
+=head3 _init_tides_user
+
+  * Purpose: Set up initial TIDES user if not present.
+  * Expected parameters: None
+  * Function on success: Add TIDES user to DB.
+  * Function on failure:
+
+=cut
+
+sub _init_tides_user {
+    my $c = shift;
+    my $dbh = $c->dbh;
+
+    # Check for TIDES_USER;
+    my $user = $ENV{TIDES_USER} || return;
+    my $sth = $dbh->prepare(qq{SELECT id FROM users WHERE name = ?});
+    $sth->execute($user) or return $c->error($dbh->errstr);
+    my($val) = $sth->fetchrow_array;
+    return if $val;
+
+    # Add TIDES_USER to DB.
+    use Digest::SHA;
+    my $pass = _read_secret($ENV{TIDES_PASSWORD_FILE});
+    my $sha  = Digest::SHA::sha1_base64($pass);
+    $sth = $dbh->prepare(qq{INSERT INTO users (name,password) VALUES (?,?)});
+    $sth->execute($user, $sha) or return $c->error($dbh->errstr);
+}
+
 =head1 BUGS AND LIMITATIONS
 
 There are no known problems with this module.
@@ -1568,7 +1625,7 @@ Ken Yamaguchi, C<< <ken at knowledgesynthesis.com> >>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2018 Knowledge Synthesis Inc., all rights reserved.
+Copyright 2019 Knowledge Synthesis Inc., all rights reserved.
 
 This program is released under the following license: gpl
 

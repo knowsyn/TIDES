@@ -2,6 +2,25 @@ TIDES
 
 Toolkit for Immunogenomic Data Exchange and Storage
 
+DOCKER
+
+TIDES requires the knowsyn/tides image as well as a postgres image.
+Additionally, the Docker stack requires four secrets, which can be
+generated as follows (using bash syntax and the pwgen command):
+
+	mkdir secrets
+	chmod 700 secrets
+	for i in postgres tides www; do pwgen >secrets/$i.txt; done
+	perl -MDigest::MD5=md5_base64 -l -e 'print md5_base64($$,time(),rand(9999))' >secrets/cgi.txt
+
+Then, to bring up TIDES on port 443:
+
+	time docker pull knowsyn/tides:latest
+	time docker pull postgres:latest
+	docker stack deploy -c docker-compose.yml tides
+
+TIDES should soon be running at https://localhost/.
+
 DATABASE
 
 TIDES uses a database to store information and has been developed and
@@ -75,7 +94,7 @@ Test::Perl::Critic     1.01
 Test::Pod              1.26
 Test::Pod::Coverage    1.08
 
-They are all available on CPAN (http://www.cpan.org)
+They are all available on CPAN (https://www.cpan.org/).
 
 SUPPORT AND DOCUMENTATION
 
@@ -86,7 +105,7 @@ command.
 
 COPYRIGHT AND LICENCE
 
-Copyright 2018 Knowledge Synthesis Inc.
+Copyright 2019 Knowledge Synthesis Inc.
 
 This program is released under the following license: gpl
 
