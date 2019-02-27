@@ -29,9 +29,8 @@ RUN git clone https://github.com/knowsyn/TIDES.git && \
 
 # Build and install disambiguateR
 RUN git clone https://github.com/hughsalamon/disambiguateR.git && \
-    cd disambiguateR && \
-    R CMD build disambiguateR_0.9.4.9000 && \
-    R CMD INSTALL disambiguateR_0.9.4.9000.tar.gz && \
+    R CMD build disambiguateR && \
+    R CMD INSTALL disambiguateR_*.tar.gz && \
     R --vanilla -e 'library(disambiguateR); updateHLAdata()'
 
 #
