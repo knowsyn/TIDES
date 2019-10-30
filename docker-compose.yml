@@ -26,6 +26,9 @@ services:
       - user-password
       - www-password
       - cgi-cookie
+      - cert
+      - source: key
+        mode: 0400
     ports:
       - 443:443
     depends_on:
@@ -40,6 +43,10 @@ secrets:
     file: ./secrets/www.txt
   cgi-cookie:
     file: ./secrets/cgi.txt
+  cert:
+    file: ./secrets/cert.txt
+  key:
+    file: ./secrets/key.txt
 
 volumes:
   postgres_data:

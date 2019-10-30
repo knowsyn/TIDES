@@ -60,6 +60,7 @@ RUN apt-get update && \
 COPY --from=build /usr/local /usr/local
 COPY --from=build /var/www/html /var/www/html
 COPY --from=build /TIDES/tides.conf /etc/apache2/sites-available
+COPY --from=build /TIDES/docker-entrypoint.sh /usr/local/bin
 
 RUN ln -s /usr/local/bin/tides /usr/lib/cgi-bin && \
     a2ensite tides && \
@@ -72,4 +73,5 @@ RUN ln -s /usr/local/bin/tides /usr/lib/cgi-bin && \
     ln -sf /dev/stderr /var/log/apache2/ssl_error.log
 
 EXPOSE 443
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
