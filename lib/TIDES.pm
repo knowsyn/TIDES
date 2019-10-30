@@ -67,8 +67,8 @@ Called automatically right before setup().
 sub cgiapp_init {
     my $c = shift;
 
-    my $host = $ENV{DB_HOST} || 'localhost';
-    my $user = 'tides';
+    my $host = $ENV{DB_HOST} || '';
+    my $user = $c->param('db_user') // 'tides';
     my $pass = _read_secret($ENV{WWW_PASSWORD_FILE});
     $c->dbh_config("dbi:Pg:dbname=tides;host=$host", $user, $pass, {AutoCommit => 0});
     $c->_init_tides_user;
@@ -1566,7 +1566,7 @@ sub _gl_to_pypop {
 sub _read_secret {
     my $file = shift;
     my $val = '';
-    return $val unless -f $file;
+    return $val unless $file && -f $file;
 
     open(my $fp, '<', $file) or return $val;
     while (<$fp>) {
