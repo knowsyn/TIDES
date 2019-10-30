@@ -72,21 +72,6 @@ sub cgiapp_init {
     my $pass = _read_secret($ENV{WWW_PASSWORD_FILE});
     $c->dbh_config("dbi:Pg:dbname=tides;host=$host", $user, $pass, {AutoCommit => 0});
     $c->_init_tides_user;
-    return;
-
-    # FIX: DB sessions
-    $c->session_config(
-        CGI_SESSION_OPTIONS => [
-            'driver:postgresql;serializer:freezethaw',
-            $c->query,
-            { Handle => $c->dbh, ColumnType => 'binary' }
-        ],
-        COOKIE_PARAMS       => {
-            -expires => '+4h',
-            -secure  => 1,
-        },
-        DEFAULT_EXPIRY      => '+4h',
-    );
 }
 
 =head3 setup
@@ -153,7 +138,6 @@ Clean up.
 
 sub teardown {
     my $c = shift;
-    $c->session->flush if $c->session_loaded;
     $c->dbh->disconnect;
 }
 
