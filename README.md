@@ -22,12 +22,12 @@ key file to `secrets/key.txt`. Alternatively, to use the auto-generated
 certificate, which by default will not be trusted by browsers, remove
 all lines containing `cert` and `key` from `docker-compose.yml`.
 
-TIDES requires the knowsyn/tides image as well as a postgres image.
-If there is no Docker swarm yet, `docker swarm init` initializes one
-locally. Then, to bring up TIDES on port 443:
+TIDES requires the knowsyn/tides image as well as a postgres image prior
+to release 12.  If there is no Docker swarm yet, `docker swarm init`
+initializes one locally. Then, to bring up TIDES on port 443:
 
     docker pull knowsyn/tides:latest
-    docker pull postgres:latest
+    docker pull postgres:11
     docker stack deploy -c docker-compose.yml tides
 
 Installation complete. TIDES should soon be running at

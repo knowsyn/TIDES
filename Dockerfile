@@ -1,7 +1,7 @@
 #
 # Build image
 #
-FROM debian:stretch-slim AS build
+FROM debian:buster-slim AS build
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -36,7 +36,7 @@ RUN git clone https://github.com/hughsalamon/disambiguateR.git && \
 #
 # Final image
 #
-FROM debian:stretch-slim
+FROM debian:buster-slim
 LABEL maintainer="Ken Yamaguchi <ken@knowledgesynthesis.com>"
 
 RUN apt-get update && \
